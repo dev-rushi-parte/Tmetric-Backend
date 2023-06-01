@@ -28,10 +28,16 @@ app.use(morgan("common"));
 
 
 app.get("/", async (req, res) => {
-
+    const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    const userAgent = req.headers['user-agent'];
     // const { email, userId } = req.body
     // const user = await User.find({ _id: userId })
-    res.status(201).send("home page" + " " + "HII home page")
+    res.status(201).send("home page" + " " + "HII home page", {
+        ipAddress,
+        userAgent,
+        body: req.body,
+        req: req.headers
+    })
 })
 
 
